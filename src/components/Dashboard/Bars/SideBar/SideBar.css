@@ -1,0 +1,12 @@
+.side{
+    height: 100%;
+    width: 12.5%;
+    position: fixed;
+    top: 0;
+    left:0;
+    background-color: black;
+}
+.preside{
+    padding-top: 35%;
+    width: 100%;
+}

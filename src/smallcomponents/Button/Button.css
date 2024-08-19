@@ -1,0 +1,25 @@
+.btn {
+    display: inline-block;
+    padding: 5px 8px;
+    font-size: 1.225rem;
+    font-weight: 500;
+    margin-left: 35px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 9px transparent;
+    
+  }
+  
+  .btn:hover {background-color: rgb(10, 116, 154);}
+  
+  .btn:active {
+    background-color: rgb(10, 116, 154);
+    box-shadow: 0 5px transparent;
+    transform: translateY(1px);
+  }
