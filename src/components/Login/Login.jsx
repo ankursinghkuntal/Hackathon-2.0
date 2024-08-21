@@ -1,84 +1,100 @@
-import React from 'react'
-import { useState } from 'react'
-import './Login.css'
+import React, { useState } from 'react';
+import axios from 'axios';
+import './Login.css';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [user, setUser] = useState({
-    email:"",
-    password:"",
-
+    email: "",
+    password: "",
   });
 
   const handleInputChange = (e) => {
-    const{ name,value } = e.target;
-    setUser((prev)=>({...prev,[name]:value}))
-  }
+    const { name, value } = e.target;
+    setUser((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const handleFormSubmit = (event)=>{
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(user);
-  }
+    
+    try {
+      const response = await axios.post('http://localhost:4000/login', user);
+
+      if (response.status === 200) {
+        alert('Login successful');
+        // Add navigation or further actions here if needed
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 404) {
+          alert('User not found. Please sign up.');
+        } else if (error.response.status === 401) {
+          alert('Invalid password');
+        } else {
+          alert('Error during login. Please try again later.');
+        }
+      } else {
+        console.error('Login error:', error);
+        alert('An unexpected error occurred.');
+      }
+    }
+  };
 
   return (
-    <>
     <div className="main1">
       <div className="container1">
-     <form onSubmit={handleFormSubmit}>
-      <div>
-        <h2>Log In</h2>
-        <br />
-        <p className='para1'><b>Already have an account? Log in here.</b></p>
-        <br />
-       </div>
-        <div className="in1">
-        <label htmlFor="email">
-          <b>Email</b>
-        </label>
-        <input
-        className='input1'
-         type="email" 
-         name='email'
-         placeholder='Enter email'
-         required
-         value={user.email}
-         onChange={handleInputChange}
-        />
-        <br />
-        <label htmlFor="password">
-          <b>Password</b>
-        </label>
-        <input
-        className='input1'
-         type="password" 
-         name='password'
-         placeholder='Enter password'
-         required
-         value={user.password}
-         onChange={handleInputChange}
-        />
-        {/* <br /> */}
-        <div className="row">
-          <div className='check'>
-            <input className='radio' type="checkbox" />
-            <div className='remember'>Remember me </div>
+        <form onSubmit={handleFormSubmit}>
+          <h2>Log In</h2>
+          <br />
+          <p className='para1'><b>Already have an account? Log in here.</b></p>
+          <br />
+          <div className="in1">
+            <label htmlFor="email"><b>Email</b></label>
+            <input
+              className='input1'
+              type="email"
+              name='email'
+              placeholder='Enter email'
+              required
+              value={user.email}
+              onChange={handleInputChange}
+            />
+            <br />
+            <label htmlFor="password"><b>Password</b></label>
+            <input
+              className='input1'
+              type="password"
+              name='password'
+              placeholder='Enter password'
+              required
+              value={user.password}
+              onChange={handleInputChange}
+            />
+            <div className="row">
+              <div className='check'>
+                <input className='radio' type="checkbox" />
+                <div className='remember'>Remember me </div>
+              </div>
+              <span className="span">Forgot password?</span>
+            </div>
+            <div className="sub1">
+              <button className='submit11'><b>Submit</b></button> 
+            </div>
+            <div className="bt11">
+              <button className="btn11">
+                <img src="src/components/Login/assets/google.png" className='google' alt="" />
+                Google
+              </button>
+              <button className="btn11">
+                <img src="src/components/Login/assets/apple.png" className='apple' alt="" />
+                Apple
+              </button>
+            </div>
           </div>
-          <span className="span">Forgot password?</span>
-        </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-      <div className="sub1">
-        <button className='submit11'><b>Submit</b></button> 
-      </div>
-      <div className="bt11">
-        <button className="btn11"><img src="src\components\Login\assets\google.png" className='google' alt="" />Google</button>
-        <button className="btn11"><img src="src\components\Login\assets\apple.png" className='apple' alt="" />Apple</button>
-      </div>
-      </div>
-     </form>
-      </div>
-     </div>
-    </>
-  )
-}
-
-export default Login
+export default Login;
