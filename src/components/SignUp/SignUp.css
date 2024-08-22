@@ -136,3 +136,26 @@ h1{
 .apple{
   height: 20px;
 }
+
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input {
+  width: 24rem;
+  height: 5vh;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.password-toggle svg {
+  color: black; /* or any color you prefer */
+}

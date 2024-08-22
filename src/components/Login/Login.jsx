@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 
 const Login = () => {
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate(); // Initialize useNavigate
 
@@ -16,15 +18,19 @@ const Login = () => {
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    
+
     try {
       const response = await axios.post('http://localhost:4000/login', user);
 
       if (response.status === 200) {
         alert('Login successful');
-        navigate('/'); // Navigate to the home page after successful login
+        navigate('/'); // Navigate to the home page
       }
     } catch (error) {
       if (error.response) {
@@ -48,47 +54,56 @@ const Login = () => {
         <form onSubmit={handleFormSubmit}>
           <h2>Log In</h2>
           <br />
-          <p className='para1'><b>Already have an account? Log in here.</b></p>
+          <p className="para1"><b>Already have an account? Log in here.</b></p>
           <br />
           <div className="in1">
             <label htmlFor="email"><b>Email</b></label>
             <input
-              className='input1'
+              className="input1"
               type="email"
-              name='email'
-              placeholder='Enter email'
+              name="email"
+              placeholder="Enter email"
               required
               value={user.email}
               onChange={handleInputChange}
             />
             <br />
             <label htmlFor="password"><b>Password</b></label>
-            <input
-              className='input1'
-              type="password"
-              name='password'
-              placeholder='Enter password'
-              required
-              value={user.password}
-              onChange={handleInputChange}
-            />
+            <div className="password-container">
+              <input
+                className="input1"
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                placeholder="Enter password"
+                required
+                value={user.password}
+                onChange={handleInputChange}
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
             <div className="row">
-              <div className='check'>
-                <input className='radio' type="checkbox" />
-                <div className='remember'>Remember me </div>
+              <div className="check">
+                <input className="radio" type="checkbox" />
+                <div className="remember">Remember me</div>
               </div>
               <span className="span">Forgot password?</span>
             </div>
             <div className="sub1">
-              <button className='submit11'><b>Submit</b></button> 
+              <button className="submit11"><b>Submit</b></button>
             </div>
             <div className="bt11">
               <button className="btn11">
-                <img src="src/components/Login/assets/google.png" className='google' alt="" />
+                <img src="src/components/Login/assets/google.png" className="google" alt="" />
                 Google
               </button>
               <button className="btn11">
-                <img src="src/components/Login/assets/apple.png" className='apple' alt="" />
+                <img src="src/components/Login/assets/apple.png" className="apple" alt="" />
                 Apple
               </button>
             </div>

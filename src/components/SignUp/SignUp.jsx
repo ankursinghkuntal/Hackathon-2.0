@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './signUp.css';
 import { useNavigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // For the eye icons
 
 const SignUp = () => {
   const [user, setUser] = useState({
@@ -10,6 +11,7 @@ const SignUp = () => {
     password: '',
     phoneNumber: '',
   });
+  const [passwordVisible, setPasswordVisible] = useState(false); // State to toggle password visibility
 
   const navigate = useNavigate(); // Initialize useNavigate
 
@@ -124,15 +126,23 @@ const SignUp = () => {
             <label htmlFor="password">
               <b>Password</b>
             </label>
-            <input
-              className="input"
-              type="password"
-              name="password"
-              placeholder="Enter password"
-              required
-              value={user.password}
-              onChange={handleInputChange}
-            />
+            <div className="password-container">
+              <input
+                className="input password-input"
+                type={passwordVisible ? 'text' : 'password'}
+                name="password"
+                placeholder="Enter password"
+                required
+                value={user.password}
+                onChange={handleInputChange}
+              />
+              <span
+                className="password-toggle"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+              >
+                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
             <br />
             <label htmlFor="phoneNumber">
               <b>Phone Number</b>
