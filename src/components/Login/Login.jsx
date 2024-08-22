@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +24,7 @@ const Login = () => {
 
       if (response.status === 200) {
         alert('Login successful');
-        // Add navigation or further actions here if needed
+        navigate('/'); // Navigate to the home page after successful login
       }
     } catch (error) {
       if (error.response) {

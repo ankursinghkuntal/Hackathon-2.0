@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './signUp.css';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [user, setUser] = useState({
@@ -9,6 +10,8 @@ const SignUp = () => {
     password: '',
     phoneNumber: '',
   });
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -61,6 +64,7 @@ const SignUp = () => {
           password: '',
           phoneNumber: '',
         });
+        navigate('/login'); // Navigate to the login page after successful signup
       } else {
         alert(`Error: ${response.data.message || 'Unknown error occurred'}`);
       }
